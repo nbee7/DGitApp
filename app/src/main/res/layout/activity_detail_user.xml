@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorPrimary"
+    tools:context=".ui.detail.DetailUserActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:colorPrimary">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_user"
+            style="@style/Text.White.TitleDetail"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="48dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_username"
+            style="@style/Text.White.TitleDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@id/iv_user"
+            app:layout_constraintStart_toStartOf="@id/iv_user"
+            app:layout_constraintTop_toBottomOf="@id/iv_user"
+            tools:text="@tools:sample/full_names" />
+
+        <LinearLayout
+            android:id="@+id/layout_detail_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/tv_username"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username"
+            app:layout_constraintEnd_toEndOf="@+id/tv_username">
+
+            <LinearLayout
+                android:id="@+id/layout_detail_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_apartment_24"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_company"
+                    android:layout_gravity="center_vertical"
+                    style="@style/Text.White.SubDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    tools:text="Google"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_detail_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@+id/layout_detail_company"
+                app:layout_constraintTop_toBottomOf="@+id/layout_detail_company"
+                app:layout_constraintEnd_toEndOf="@+id/layout_detail_company">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_location_on_24"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_location"
+                    style="@style/Text.White.SubDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    tools:text="Indonesia"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_detail_user" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_repository"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_followings"
+            android:text="@string/txt_repository"
+            style="@style/Text.White.TitleDetail" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_repository"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@id/txt_repository"
+            app:layout_constraintEnd_toEndOf="@+id/txt_repository"
+            app:layout_constraintTop_toBottomOf="@+id/txt_repository"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Text.White.SubDetail"
+            tools:text="1234" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_followings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintStart_toStartOf="@id/iv_user"
+            app:layout_constraintEnd_toEndOf="@+id/iv_user"
+            android:text="@string/txt_followings"
+            style="@style/Text.White.TitleDetail" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_followings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/txt_followings"
+            app:layout_constraintEnd_toEndOf="@+id/txt_followings"
+            app:layout_constraintTop_toBottomOf="@+id/txt_followings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Text.White.SubDetail"
+            tools:text="1234" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/txt_followings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            android:text="@string/txt_followers"
+            style="@style/Text.White.TitleDetail" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/txt_followers"
+            app:layout_constraintEnd_toEndOf="@+id/txt_followers"
+            app:layout_constraintTop_toBottomOf="@+id/txt_followers"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Text.White.SubDetail"
+            tools:text="1234" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
