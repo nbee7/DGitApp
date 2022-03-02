@@ -4,4 +4,6 @@
     <string name="txt_followings">Followings</string>
     <string name="txt_followers">Followers</string>
     <string name="txt_200">200</string>
+    <string name="txt_company">Google</string>
+    <string name="txt_location">Indonesia</string>
 </resources>
