@@ -5,5 +5,6 @@
     <color name="colorPrimary">#0d47a1</color>
     <color name="colorPrimaryDark">#002171</color>
     <color name="colorSecondary">#00e5ff</color>
+    <color name="colorSecondaryDark">#00b2cc</color>
     <color name="colorShade">#DDDDDD</color>
 </resources>

@@ -3,4 +3,5 @@
     <string name="txt_repository">Repository</string>
     <string name="txt_followings">Followings</string>
     <string name="txt_followers">Followers</string>
+    <string name="txt_200">200</string>
 </resources>
