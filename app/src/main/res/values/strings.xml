@@ -10,4 +10,6 @@
     <string name="search_hint">Enter Username</string>
     <string name="txt_data_empty">Data Not Found</string>
     <string name="language">Language</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
