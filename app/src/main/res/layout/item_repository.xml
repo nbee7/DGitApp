@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    android:padding="8dp"
+    app:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="1"
+            tools:text="@tools:sample/full_names"
+            style="@style/Text.Black.TittleItemUsername"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            style="@style/Text.Black.DescItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="Description" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/view_decor"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shp_round"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/language"
+            style="@style/Text.Black.DescItem"
+            app:layout_constraintBottom_toBottomOf="@+id/view_decor"
+            app:layout_constraintStart_toEndOf="@+id/view_decor"
+            app:layout_constraintTop_toTopOf="@+id/view_decor"
+            app:layout_constraintVertical_bias="0.555" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_fork"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_code_fork"
+            app:layout_constraintBottom_toBottomOf="@+id/view_decor"
+            app:layout_constraintEnd_toStartOf="@id/tv_fork_count"
+            app:layout_constraintTop_toTopOf="@+id/view_decor"
+            app:layout_constraintVertical_bias="0.666" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_fork_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            tools:text="@string/txt_200"
+            style="@style/Text.Black.DescItem"
+            app:layout_constraintBottom_toBottomOf="@+id/img_fork"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_fork" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_eye"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_eye"
+            app:layout_constraintBottom_toBottomOf="@+id/view_decor"
+            app:layout_constraintEnd_toStartOf="@+id/tv_watchers_count"
+            app:layout_constraintTop_toTopOf="@+id/view_decor"
+            app:layout_constraintVertical_bias="0.666" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_watchers_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            tools:text="@string/txt_200"
+            style="@style/Text.Black.DescItem"
+            app:layout_constraintBottom_toBottomOf="@+id/img_eye"
+            app:layout_constraintEnd_toStartOf="@id/img_fork"
+            app:layout_constraintTop_toTopOf="@+id/img_eye" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_star_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            tools:text="@string/txt_200"
+            style="@style/Text.Black.DescItem"
+            app:layout_constraintBottom_toBottomOf="@+id/img_star"
+            app:layout_constraintEnd_toStartOf="@+id/img_eye"
+            app:layout_constraintTop_toTopOf="@+id/img_star" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_star"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="@+id/view_decor"
+            app:layout_constraintEnd_toStartOf="@+id/tv_star_count"
+            app:layout_constraintTop_toTopOf="@+id/view_decor" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
