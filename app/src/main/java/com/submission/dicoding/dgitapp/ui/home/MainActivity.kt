@@ -1,105 +1,104 @@
 package com.submission.dicoding.dgitapp.ui.home
 
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
+import android.view.View
+import android.widget.EditText
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.submission.dicoding.dgitapp.data.UserEntity
+import com.submission.dicoding.dgitapp.R
+import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
 import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
-import java.util.ArrayList
+import com.submission.dicoding.dgitapp.utils.gone
+import com.submission.dicoding.dgitapp.utils.visible
 
 class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback {
     private lateinit var binding: ActivityMainBinding
-    private val listUsers = ArrayList<UserEntity>()
-    private lateinit var mainAdapter: MainAdapter
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val listUserFromAsset = loadUserGithub()
-        listUsers.addAll(listUserFromAsset)
-        showRecycleView()
+        setObserver()
     }
 
-    private fun showRecycleView(){
-        mainAdapter = MainAdapter(listUsers, this, this)
-        binding.rvListUser.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-            adapter = mainAdapter
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.option_menu, menu)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = (menu.findItem(R.id.search)?.actionView as SearchView).apply {
+            this.setBackgroundColor(Color.WHITE)
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            queryHint = resources.getString(R.string.search_hint)
         }
-    }
 
-    private fun parsingFileToString(): String? {
-        return try {
-            val `is` = assets.open("githubuser.json")
-            val buffer = ByteArray(`is`.available())
-            `is`.read(buffer)
-            `is`.close()
-            String(buffer)
-
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            null
-        }
-    }
-
-    private fun loadUserGithub(): List<UserEntity> {
-        val list = ArrayList<UserEntity>()
-        try {
-            val responseObject = JSONObject(parsingFileToString().toString())
-            val listArray = responseObject.getJSONArray("users")
-            for (i in 0 until listArray.length()) {
-                val course = listArray.getJSONObject(i)
-
-                val username = course.getString("username")
-                val name = course.getString("name")
-                val avatar = course.getString("avatar")
-                val company = course.getString("company")
-                val location = course.getString("location")
-                val repos = course.getInt("repository")
-                val followers = course.getInt("follower")
-                val followings = course.getInt("following")
-
-                val usersItemResponse = UserEntity(
-                    followers,
-                    followings,
-                    name,
-                    company,
-                    location,
-                    avatar,
-                    repos,
-                    username
-                )
-                list.add(usersItemResponse)
+        val searchEditText = searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText
+        TextViewCompat.setTextAppearance(searchEditText, R.style.searchText)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { mainViewModel.searchUser(it) }
+                searchView.clearFocus()
+                return false
             }
-        } catch (e: JSONException) {
-            e.printStackTrace()
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+        return true
+    }
+
+    private fun setObserver() {
+        mainViewModel.getListSearch().observe(this) {
+            if (it != null) {
+                val mainAdapter = MainAdapter(it, this, this)
+                binding.rvListUser.apply {
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    setHasFixedSize(true)
+                    adapter = mainAdapter
+                }
+            } else {
+                binding.rvListUser.gone()
+                binding.txtEmpty.visible()
+            }
         }
-        return list
+
+        mainViewModel.getLoading().observe(this){
+            showLoading(it)
+        }
     }
 
-    override fun onUserItemClicked(data: UserEntity) {
-        DetailUserActivity.start(this, data)
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.rvListUser.gone()
+            binding.pbUser.visible()
+        } else {
+            binding.rvListUser.visible()
+            binding.pbUser.gone()
+        }
     }
 
-    override fun onShareClick(data: UserEntity) {
+    override fun onUserItemClicked(data: UserItems) {
+        DetailUserActivity.start(this, data.login)
+    }
+
+    override fun onShareClick(data: UserItems) {
         val dataShare = """
                         User Github
-                        Username    : ${data.username}
-                        Followers   : ${data.follower}
-                        Followings  : ${data.following}
-                        Repository  : ${data.repository}
-                        Link Github : https://github.com/${data.username}
+                        Username    : ${data.login}
+                        Link Github : ${data.htmlUrl}
                     """.trimIndent()
         val intent = Intent(Intent.ACTION_SEND)
         intent.apply {

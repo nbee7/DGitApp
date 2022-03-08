@@ -6,4 +6,7 @@
     <string name="txt_200">200</string>
     <string name="txt_company">Google</string>
     <string name="txt_location">Indonesia</string>
+    <string name="search">Search User</string>
+    <string name="search_hint">Enter Username</string>
+    <string name="txt_data_empty">Data Not Found</string>
 </resources>
