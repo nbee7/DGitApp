@@ -17,9 +17,10 @@ class MainViewModel: ViewModel() {
     private val listUserSearch = MutableLiveData<List<UserItems>>()
     private val loading = MutableLiveData(true)
     private val token = "token " + BuildConfig.API_KEY
+    private val userDummy = "brian"
 
     init {
-        searchUser("daffa")
+        searchUser(userDummy)
     }
 
     fun searchUser(username: String) {
