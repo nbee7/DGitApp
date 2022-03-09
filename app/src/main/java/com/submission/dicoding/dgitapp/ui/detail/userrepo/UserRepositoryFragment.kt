@@ -42,15 +42,15 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null){
-            username?.let { repoViewModel.userRepository(it) }
-
-            repoViewModel.getRepository().observe(viewLifecycleOwner) {
-                if (it != null){
-                    setRecycleview(it)
+            repoViewModel.repository.observe(viewLifecycleOwner) { data ->
+                if (data == null){
+                    username?.let { repoViewModel.userRepository(it) }
+                } else {
+                    setRecycleview(data)
                 }
             }
 
-            repoViewModel.getLoading().observe(viewLifecycleOwner) {
+            repoViewModel.loading.observe(viewLifecycleOwner) {
                 showLoading(it)
             }
         }

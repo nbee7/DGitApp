@@ -29,15 +29,15 @@ class DetailUserActivity : AppCompatActivity() {
 
         initViewPager()
 
-        username?.let { detailViewModel.detailUser(it) }
-
-        detailViewModel.getDetail().observe(this) {
-            if (it != null) {
-                setUserDetail(it)
+        detailViewModel.detailUser.observe(this) { data ->
+            if (data == null) {
+                username?.let { detailViewModel.detailUser(it) }
+            } else {
+                setUserDetail(data)
             }
         }
 
-        detailViewModel.getLoading().observe(this) {
+        detailViewModel.loading.observe(this) {
             showLoading(it)
         }
 

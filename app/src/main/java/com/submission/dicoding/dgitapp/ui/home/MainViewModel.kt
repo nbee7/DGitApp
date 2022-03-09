@@ -14,8 +14,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel: ViewModel() {
-    private val listUserSearch = MutableLiveData<List<UserItems>>()
-    private val loading = MutableLiveData(true)
+    private val _listUserSearch = MutableLiveData<List<UserItems>>()
+    val listUserSeach: LiveData<List<UserItems>> = _listUserSearch
+    private val _loading = MutableLiveData(true)
+    val loading: LiveData<Boolean> = _loading
     private val token = "token " + BuildConfig.API_KEY
     private val userDummy = "brian"
 
@@ -24,33 +26,25 @@ class MainViewModel: ViewModel() {
     }
 
     fun searchUser(username: String) {
-        loading.value = true
+        _loading.value = true
         val client = ApiConfig.getApiService().searchUser(username, token)
         client.enqueue(object : Callback<UserResponse> {
             override fun onResponse(
                 call: Call<UserResponse>,
                 response: Response<UserResponse>
             ) {
-                loading.value = false
+                _loading.value = false
                 if (response.isSuccessful) {
-                    listUserSearch.value = response.body()?.items
+                    _listUserSearch.value = response.body()?.items
                 } else {
                     Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                loading.value = false
+                _loading.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
             }
         })
-    }
-
-    fun getListSearch(): LiveData<List<UserItems>> {
-        return listUserSearch
-    }
-
-    fun getLoading(): LiveData<Boolean> {
-        return loading
     }
 }

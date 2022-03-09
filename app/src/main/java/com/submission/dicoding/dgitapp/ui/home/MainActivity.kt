@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
     }
 
     private fun setObserver() {
-        mainViewModel.getListSearch().observe(this) {
+        mainViewModel.listUserSeach.observe(this) {
             if (it != null) {
                 val mainAdapter = MainAdapter(it, this, this)
                 binding.rvListUser.apply {
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
             }
         }
 
-        mainViewModel.getLoading().observe(this){
+        mainViewModel.loading.observe(this){
             showLoading(it)
         }
     }

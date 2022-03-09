@@ -13,66 +13,57 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FollowViewModel: ViewModel() {
-    private val followers = MutableLiveData<List<UserItems>>()
-    private val followings = MutableLiveData<List<UserItems>>()
-    private val loading = MutableLiveData(true)
+    private val _followers = MutableLiveData<List<UserItems>>(null)
+    private val _followings = MutableLiveData<List<UserItems>>(null)
+    val followers: LiveData<List<UserItems>> = _followers
+    val followings: LiveData<List<UserItems>> = _followings
+    private val _loading = MutableLiveData(true)
+    val loading: LiveData<Boolean> = _loading
     private val token = "token " + BuildConfig.API_KEY
 
     fun userFollowers(username: String) {
-        loading.value = true
+        _loading.value = true
         val client = ApiConfig.getApiService().getFollowers(username, token)
         client.enqueue(object : Callback<List<UserItems>> {
             override fun onResponse(
                 call: Call<List<UserItems>>,
                 response: Response<List<UserItems>>
             ) {
-                loading.value = false
+                _loading.value = false
                 if (response.isSuccessful) {
-                    followers.value = response.body()
+                    _followers.value = response.body()
                 } else {
                     Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<List<UserItems>>, t: Throwable) {
-                loading.value = false
+                _loading.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
             }
         })
     }
 
     fun userFollowings(username: String) {
-        loading.value = true
+        _loading.value = true
         val client = ApiConfig.getApiService().getFollowings(username, token)
         client.enqueue(object : Callback<List<UserItems>> {
             override fun onResponse(
                 call: Call<List<UserItems>>,
                 response: Response<List<UserItems>>
             ) {
-                loading.value = false
+                _loading.value = false
                 if (response.isSuccessful) {
-                    followings.value = response.body()
+                    _followings.value = response.body()
                 } else {
                     Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<List<UserItems>>, t: Throwable) {
-                loading.value = false
+                _loading.value = false
                 Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
             }
         })
-    }
-
-    fun getFollowers(): LiveData<List<UserItems>> {
-        return followers
-    }
-
-    fun getFollowings(): LiveData<List<UserItems>> {
-        return followings
-    }
-
-    fun getLoading(): LiveData<Boolean> {
-        return loading
     }
 }

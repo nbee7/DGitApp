@@ -46,31 +46,28 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
         if (activity != null) {
             setUpViewPager()
 
-            followViewModel.getFollowers().observe(viewLifecycleOwner) {
-                if (it != null) {
-                    setRecycleview(it)
-                }
-            }
-
-            followViewModel.getFollowings().observe(viewLifecycleOwner) {
-                if (it != null) {
-                    setRecycleview(it)
-                }
-            }
-
-            followViewModel.getLoading().observe(viewLifecycleOwner) {
+            followViewModel.loading.observe(viewLifecycleOwner) {
                 showLoading(it)
             }
         }
     }
 
     private fun setUpViewPager() {
-        if (arguments != null) {
-            sectionIndex = arguments?.getInt(ARG_SECTION_INDEX, 0)
-        }
         when (sectionIndex) {
-            1 -> username?.let { followViewModel.userFollowers(it) }
-            2 -> username?.let { followViewModel.userFollowings(it) }
+            1 -> followViewModel.followers.observe(viewLifecycleOwner) { data ->
+                if (data == null) {
+                    username?.let { followViewModel.userFollowers(it) }
+                } else {
+                    setRecycleview(data)
+                }
+            }
+            2 -> followViewModel.followings.observe(viewLifecycleOwner) { data ->
+                if (data == null) {
+                    username?.let { followViewModel.userFollowings(it) }
+                } else {
+                    setRecycleview(data)
+                }
+            }
         }
     }
 
