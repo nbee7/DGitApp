@@ -1,4 +1,4 @@
-package com.submission.dicoding.dgitapp.ui.detail
+package com.submission.dicoding.dgitapp.ui.detail.userrepo
 
 import android.content.Intent
 import android.net.Uri
@@ -47,8 +47,6 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
             repoViewModel.getRepository().observe(viewLifecycleOwner) {
                 if (it != null){
                     setRecycleview(it)
-                } else {
-                    binding?.txtEmpty?.visible()
                 }
             }
 
@@ -59,11 +57,15 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
     }
 
     private fun setRecycleview(listRepos: List<UserRepositoryResponse>) {
-        val mainAdapter = UserRepositoryAdapter(listRepos, this)
-        binding?.rvListUser?.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-            adapter = mainAdapter
+        if (listRepos.isNullOrEmpty()) {
+            binding?.txtEmpty?.visible()
+        } else {
+            val mainAdapter = UserRepositoryAdapter(listRepos, this)
+            binding?.rvListUser?.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                setHasFixedSize(true)
+                adapter = mainAdapter
+            }
         }
     }
 

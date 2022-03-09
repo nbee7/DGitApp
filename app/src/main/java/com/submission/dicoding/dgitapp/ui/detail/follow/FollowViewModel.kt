@@ -1,4 +1,4 @@
-package com.submission.dicoding.dgitapp.ui.detail
+package com.submission.dicoding.dgitapp.ui.detail.follow
 
 import android.content.ContentValues
 import android.util.Log

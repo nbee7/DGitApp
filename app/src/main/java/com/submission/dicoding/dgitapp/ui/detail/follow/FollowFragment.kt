@@ -1,4 +1,4 @@
-package com.submission.dicoding.dgitapp.ui.detail
+package com.submission.dicoding.dgitapp.ui.detail.follow
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.FragmentFollowBinding
+import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.ui.home.MainAdapter
 import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
@@ -48,16 +49,12 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
             followViewModel.getFollowers().observe(viewLifecycleOwner) {
                 if (it != null) {
                     setRecycleview(it)
-                } else {
-                    binding?.txtEmpty?.visible()
                 }
             }
 
             followViewModel.getFollowings().observe(viewLifecycleOwner) {
                 if (it != null) {
                     setRecycleview(it)
-                } else {
-                    binding?.txtEmpty?.visible()
                 }
             }
 
@@ -65,7 +62,6 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
                 showLoading(it)
             }
         }
-
     }
 
     private fun setUpViewPager() {
@@ -79,12 +75,16 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
         }
     }
 
-    private fun setRecycleview(listRepos: List<UserItems>) {
-        val mainAdapter = MainAdapter(listRepos, this, this)
-        binding?.rvListUser?.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-            adapter = mainAdapter
+    private fun setRecycleview(listUser: List<UserItems>) {
+        if (listUser.isNullOrEmpty()) {
+            binding?.txtEmpty?.visible()
+        } else {
+            val mainAdapter = MainAdapter(listUser, this, this)
+            binding?.rvListUser?.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                setHasFixedSize(true)
+                adapter = mainAdapter
+            }
         }
     }
 

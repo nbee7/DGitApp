@@ -1,4 +1,4 @@
-package com.submission.dicoding.dgitapp.ui.detail
+package com.submission.dicoding.dgitapp.ui.detail.userrepo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
