@@ -12,4 +12,7 @@
     <string name="language">Language</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="repository">Repository</string>
+    <string name="followers">Followers</string>
+    <string name="followings">Followings</string>
 </resources>

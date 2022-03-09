@@ -4,40 +4,82 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.submission.dicoding.dgitapp.data.UserEntity
+import com.google.android.material.tabs.TabLayoutMediator
+import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import com.submission.dicoding.dgitapp.databinding.ActivityDetailUserBinding
+import com.submission.dicoding.dgitapp.ui.detail.SectionPagerAdapter.Companion.TAB_TITLES
+import com.submission.dicoding.dgitapp.utils.gone
+import com.submission.dicoding.dgitapp.utils.setImageUrl
+import com.submission.dicoding.dgitapp.utils.toShortNumberDisplay
+import com.submission.dicoding.dgitapp.utils.visible
 
 class DetailUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUserBinding
+    private val detailViewModel: DetailUserViewModel by viewModels()
+    private var username: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val user = intent.getParcelableExtra<UserEntity>(GITHUB_USER)
-        val avatarSource: Int = resources.getIdentifier(user?.avatar, null, packageName)
+        username = intent?.getStringExtra(GITHUB_USER)
 
-        Glide.with(this)
-            .load(avatarSource)
-            .apply(RequestOptions.circleCropTransform())
-            .into(binding.ivUser)
+        initViewPager()
 
-        binding.apply {
-            tvUsername.text = user?.username
-            tvCompany.text = user?.company
-            tvLocation.text = user?.location
-            tvRepository.text = user?.repository.toString()
-            tvFollowings.text = user?.following.toString()
-            tvFollowers.text = user?.follower.toString()
+        username?.let { detailViewModel.detailUser(it) }
+
+        detailViewModel.getDetail().observe(this) {
+            if (it != null) {
+                setUserDetail(it)
+            }
+        }
+
+        detailViewModel.getLoading().observe(this) {
+            showLoading(it)
         }
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = user?.username
+            title = username
+        }
+    }
+
+    private fun initViewPager() {
+        val sectionPagerAdapter = SectionPagerAdapter(this, username)
+        binding.vpFollowRepo.apply {
+            adapter = sectionPagerAdapter
+            offscreenPageLimit = 3
+        }
+        val mediator = TabLayoutMediator(binding.tabLayout, binding.vpFollowRepo) { tab, pos ->
+            tab.text = when (pos) {
+                0 -> getString(TAB_TITLES[0])
+                1 -> getString(TAB_TITLES[1])
+                else -> getString(TAB_TITLES[2])
+            }
+        }
+        mediator.attach()
+    }
+
+    private fun setUserDetail(data: UserDetailResponse) {
+        binding.ivUser.setImageUrl(this, data.avatarUrl, binding.pbImageUser)
+        binding.apply {
+            tvUsername.text = data.name
+            tvCompany.text = data.company
+            tvLocation.text = data.location
+            tvFollowers.text = data.followers.toShortNumberDisplay()
+            tvFollowings.text = data.following.toShortNumberDisplay()
+            tvRepository.text = data.publicRepos.toShortNumberDisplay()
+        }
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.pbDetailUser.visible()
+        } else {
+            binding.pbDetailUser.gone()
         }
     }
 

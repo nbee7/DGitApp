@@ -42,13 +42,23 @@
                         tools:src="@tools:sample/avatars" />
 
                     <ProgressBar
-                        android:id="@+id/pbDetailUser"
+                        android:id="@+id/pbImageUser"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_marginTop="40dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/pbDetailUser"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="120dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_username"

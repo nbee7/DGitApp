@@ -40,7 +40,7 @@ class UserRepositoryViewModel: ViewModel() {
         })
     }
 
-    fun getRepository(): MutableLiveData<List<UserRepositoryResponse>> {
+    fun getRepository(): LiveData<List<UserRepositoryResponse>> {
         return repository
     }
 
