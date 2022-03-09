@@ -21,7 +21,7 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
     private var _binding: FragmentFollowBinding? = null
     private val binding get() = _binding
     private val followViewModel: FollowViewModel by viewModels()
-    private var sectionIndex: Int? = null
+    private var sectionIndex: Int? = 0
     private var username: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,11 +65,10 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
     }
 
     private fun setUpViewPager() {
-        var index: Int? = 0
         if (arguments != null) {
-            index = arguments?.getInt(ARG_SECTION_INDEX, 0)
+            sectionIndex = arguments?.getInt(ARG_SECTION_INDEX, 0)
         }
-        when (index) {
+        when (sectionIndex) {
             1 -> username?.let { followViewModel.userFollowers(it) }
             2 -> username?.let { followViewModel.userFollowings(it) }
         }
