@@ -31,7 +31,7 @@ class DetailUserActivity : AppCompatActivity() {
 
         detailViewModel.detailUser.observe(this) { data ->
             if (data == null) {
-                username?.let { detailViewModel.detailUser(it) }
+                username?.let { detailViewModel.getDetailUser(it) }
             } else {
                 setUserDetail(data)
             }

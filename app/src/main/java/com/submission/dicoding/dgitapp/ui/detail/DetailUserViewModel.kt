@@ -19,7 +19,7 @@ class DetailUserViewModel: ViewModel() {
     val loading: LiveData<Boolean> = _loading
     private val token = "token " + BuildConfig.API_KEY
 
-    fun detailUser(username: String) {
+    fun getDetailUser(username: String) {
         _loading.value = true
         val client = ApiConfig.getApiService().getDetail(username, token)
         client.enqueue(object : Callback<UserDetailResponse> {
