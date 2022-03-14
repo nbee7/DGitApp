@@ -1,4 +1,4 @@
-package com.submission.dicoding.dgitapp.data.remote
+package com.submission.dicoding.dgitapp.data.remote.network
 
 import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
@@ -12,32 +12,32 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("search/users")
-    fun searchUser(
+    suspend fun searchUser(
         @Query("q") username: String,
         @Header("Authorization") token: String
-    ): Call<UserResponse>
+    ): UserResponse
 
     @GET("users/{username}")
-    fun getDetail(
+    suspend fun getDetail(
         @Path("username") username: String,
         @Header("Authorization") token: String
-    ): Call<UserDetailResponse>
+    ): UserDetailResponse
 
     @GET("users/{username}/followers")
-    fun getFollowers(
+    suspend fun getFollowers(
         @Path("username") username: String,
         @Header("Authorization") token: String
-    ): Call<List<UserItems>>
+    ): List<UserItems>
 
     @GET("users/{username}/following")
-    fun getFollowings(
+    suspend fun getFollowings(
         @Path("username") username: String,
         @Header("Authorization") token: String
-    ): Call<List<UserItems>>
+    ): List<UserItems>
 
     @GET("users/{username}/repos")
-    fun getRepository(
+    suspend fun getRepository(
         @Path("username") username: String,
         @Header("Authorization") token: String
-    ): Call<List<UserRepositoryResponse>>
+    ): List<UserRepositoryResponse>
 }

@@ -1,4 +1,4 @@
-package com.submission.dicoding.dgitapp.data.remote
+package com.submission.dicoding.dgitapp.data.remote.network
 
 import com.submission.dicoding.dgitapp.BuildConfig
 import okhttp3.OkHttpClient
