@@ -19,7 +19,8 @@ interface ApiService {
 
     @GET("users/{username}")
     fun getDetail(
-        @Path("username") username: String, @Header("Authorization") token: String
+        @Path("username") username: String,
+        @Header("Authorization") token: String
     ): Call<UserDetailResponse>
 
     @GET("users/{username}/followers")
