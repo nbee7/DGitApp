@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "userfavorite")
-class UserEntity(
+class FavoriteUserEntity(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "userId")
@@ -16,8 +16,5 @@ class UserEntity(
     var username: String? = null,
 
     @ColumnInfo(name = "avatar")
-    var avatar: String? = null,
-
-    @ColumnInfo(name = "isUserFavorite")
-    var isUserFavorite: Boolean = false
+    var avatar: String? = null
 )

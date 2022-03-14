@@ -1,19 +1,20 @@
 package com.submission.dicoding.dgitapp.data.local.room
 
 import androidx.room.*
-import com.submission.dicoding.dgitapp.data.local.entity.UserEntity
+import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUser(user: UserEntity)
-
-    @Update
-    suspend fun updateUser(user: UserEntity)
+    suspend fun insertFavoriteUser(favoriteUser: FavoriteUserEntity)
 
     @Delete
-    suspend fun deleteUser(user: UserEntity)
+    suspend fun deleteFavoriteUser(favoriteUser: FavoriteUserEntity)
 
-    @Query("SELECT * FROM userfavorite WHERE isUserFavorite = 1")
-    fun getAllFavoriteUser()
+    @Query("SELECT * FROM userfavorite")
+    fun getAllFavoriteUser(): Flow<List<FavoriteUserEntity>>
+
+    @Query("SELECT EXISTS(SELECT * FROM userfavorite WHERE userId = :userId)")
+    fun isFavoriteUser(userId: String): Flow<Boolean>
 }
