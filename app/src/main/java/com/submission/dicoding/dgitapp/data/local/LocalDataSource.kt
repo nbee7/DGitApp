@@ -9,7 +9,7 @@ class LocalDataSource(private val mUserDao: UserDao) {
 
     suspend fun deleteFavoriteUser(favoriteUser: FavoriteUserEntity) = mUserDao.deleteFavoriteUser(favoriteUser)
 
-    fun getAllFAvoriteUser() = mUserDao.getAllFavoriteUser()
+    fun getAllFavoriteUser() = mUserDao.getAllFavoriteUser()
 
     fun isFavoriteUser(id: String) = mUserDao.isFavoriteUser(id)
 }

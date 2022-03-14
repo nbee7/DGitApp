@@ -5,6 +5,7 @@ import com.submission.dicoding.dgitapp.BuildConfig
 import com.submission.dicoding.dgitapp.data.remote.network.ApiService
 import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
+import com.submission.dicoding.dgitapp.data.remote.response.UserRepositoryResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -80,10 +81,10 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getUserRepository(username: String): Flow<ApiResponse<List<UserItems>>> {
+    suspend fun getUserRepository(username: String): Flow<ApiResponse<List<UserRepositoryResponse>>> {
         return flow {
             try {
-                val response = apiService.getFollowers(token, username)
+                val response = apiService.getRepository(token, username)
                 if (response.isNotEmpty()) {
                     emit(ApiResponse.Success(response))
                 } else {

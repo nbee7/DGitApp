@@ -1,10 +1,9 @@
 package com.submission.dicoding.dgitapp.data
 
-import com.submission.dicoding.dgitapp.data.remote.ApiResponse
+import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
 import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.data.remote.response.UserRepositoryResponse
-import com.submission.dicoding.dgitapp.data.remote.response.UserResponse
 import kotlinx.coroutines.flow.Flow
 
 interface DataSource {
@@ -18,4 +17,12 @@ interface DataSource {
     fun getUserFollowings(username: String): Flow<Resource<List<UserItems>>>
 
     fun getUserRepository(username: String): Flow<Resource<List<UserRepositoryResponse>>>
+
+    suspend fun insertFavoriteUser(favoriteUser: FavoriteUserEntity)
+
+    suspend fun deleteFavoriteUser(favoriteUser: FavoriteUserEntity)
+
+    fun getUserFavorite(): Flow<List<FavoriteUserEntity>>
+
+    fun isFavoriteUser(id: String): Flow<Boolean>
 }
