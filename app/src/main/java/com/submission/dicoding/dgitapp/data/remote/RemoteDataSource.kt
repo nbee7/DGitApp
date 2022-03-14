@@ -26,8 +26,8 @@ class RemoteDataSource(private val apiService: ApiService) {
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
+                emit(ApiResponse.Error(e.message.toString()))
+                Log.e("RemoteDataSource", e.message.toString())
             }
         }.flowOn(Dispatchers.IO)
     }
@@ -42,8 +42,8 @@ class RemoteDataSource(private val apiService: ApiService) {
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
+                emit(ApiResponse.Error(e.message.toString()))
+                Log.e("RemoteDataSource", e.message.toString())
             }
         }.flowOn(Dispatchers.IO)
     }
@@ -58,8 +58,8 @@ class RemoteDataSource(private val apiService: ApiService) {
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
+                emit(ApiResponse.Error(e.message.toString()))
+                Log.e("RemoteDataSource", e.message.toString())
             }
         }.flowOn(Dispatchers.IO)
     }
@@ -74,8 +74,8 @@ class RemoteDataSource(private val apiService: ApiService) {
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
+                emit(ApiResponse.Error(e.message.toString()))
+                Log.e("RemoteDataSource", e.message.toString())
             }
         }.flowOn(Dispatchers.IO)
     }
@@ -90,8 +90,8 @@ class RemoteDataSource(private val apiService: ApiService) {
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
+                emit(ApiResponse.Error(e.message.toString()))
+                Log.e("RemoteDataSource", e.message.toString())
             }
         }.flowOn(Dispatchers.IO)
     }
