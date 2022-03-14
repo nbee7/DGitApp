@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/drawable-v24/ic_baseline_favorited_24.xml" value="0.101" />
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/drawable-v24/ic_baseline_search_24.xml" value="0.101" />
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/drawable-v24/ic_code_fork.xml" value="0.101" />
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/drawable-v24/ic_eye.xml" value="0.101" />
@@ -13,7 +14,8 @@
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/drawable/ic_github.xml" value="0.1" />
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.101" />
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/drawable/ic_star.xml" value="0.101" />
-        <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/layout/activity_detail_user.xml" value="0.18" />
+        <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/layout/activity_detail_user.xml" value="0.14444444444444443" />
+        <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/layout/activity_favorite_user.xml" value="0.15495495495495495" />
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/layout/activity_main.xml" value="0.15092592592592594" />
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.15495495495495495" />
         <entry key="..\:/Users/Sujadiyono/AndroidStudioProjects/DGitApp/app/src/main/res/layout/fragment_follow.xml" value="0.14444444444444443" />
