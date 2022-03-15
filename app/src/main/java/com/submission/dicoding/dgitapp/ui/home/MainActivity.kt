@@ -12,6 +12,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.TextViewCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.dicoding.dgitapp.R
 import com.submission.dicoding.dgitapp.data.Resource
@@ -22,6 +25,7 @@ import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
 import com.submission.dicoding.dgitapp.utils.gone
 import com.submission.dicoding.dgitapp.utils.visible
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback {
@@ -32,7 +36,6 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
