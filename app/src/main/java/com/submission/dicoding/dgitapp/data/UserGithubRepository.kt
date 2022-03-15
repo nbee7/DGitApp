@@ -117,9 +117,7 @@ class UserGithubRepository(
     }
 
     override fun getUserFavorite(): Flow<List<FavoriteUserEntity>> {
-        return flow {
-            emitAll(localDataSource.getAllFavoriteUser())
-        }
+        return localDataSource.getAllFavoriteUser()
     }
 
     override fun isFavoriteUser(id: String): Flow<Boolean> {
