@@ -2,7 +2,6 @@ package com.submission.dicoding.dgitapp.di
 
 import androidx.room.Room
 import com.submission.dicoding.dgitapp.BuildConfig
-import com.submission.dicoding.dgitapp.data.DataSource
 import com.submission.dicoding.dgitapp.data.UserGithubRepository
 import com.submission.dicoding.dgitapp.data.local.LocalDataSource
 import com.submission.dicoding.dgitapp.data.local.room.UserDatabase
@@ -54,7 +53,7 @@ val networkModule = module {
 val repositoryModule = module {
     single { LocalDataSource(get()) }
     single { RemoteDataSource(get()) }
-    single<DataSource> { UserGithubRepository(get(), get()) }
+    single { UserGithubRepository(get(), get()) }
 }
 
 val viewModelModule = module {

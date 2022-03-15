@@ -12,20 +12,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.TextViewCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.dicoding.dgitapp.R
 import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
-import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
+//import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
 import com.submission.dicoding.dgitapp.utils.gone
 import com.submission.dicoding.dgitapp.utils.visible
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback {
@@ -36,6 +32,8 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setObserver()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -64,9 +62,9 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         return true
     }
 
-    private fun searchResult(result: Resource<List<UserItems>>){
-        mainViewModel.getUser.observe(this) {
-            if (it != null) {
+    private fun setObserver(){
+        mainViewModel.getUser.observe(this) { result ->
+            if (result != null) {
                 when (result) {
                     is Resource.Loading -> showLoading(true)
                     is Resource.Error -> {
@@ -75,7 +73,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
                     }
                     is Resource.Success -> {
                         showLoading(false)
-                        val mainAdapter = it.data?.let { it1 -> MainAdapter(it1, this, this) }
+                        val mainAdapter = result.data?.let { it -> MainAdapter(it, this, this) }
                         binding.rvListUser.apply {
                             layoutManager =
                                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -87,7 +85,6 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
             }
         }
     }
-
 
     private fun showLoading(state: Boolean) {
         if (state) {
@@ -104,7 +101,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
     }
 
     override fun onUserItemClicked(data: UserItems) {
-        DetailUserActivity.start(this, data.login)
+        //DetailUserActivity.start(this, data.login)
     }
 
     override fun onShareClick(data: UserItems) {
