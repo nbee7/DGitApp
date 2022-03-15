@@ -1,6 +1,7 @@
 package com.submission.dicoding.dgitapp.di
 
 import androidx.room.Room
+import com.submission.dicoding.dgitapp.BuildConfig
 import com.submission.dicoding.dgitapp.data.DataSource
 import com.submission.dicoding.dgitapp.data.UserGithubRepository
 import com.submission.dicoding.dgitapp.data.local.LocalDataSource
@@ -12,6 +13,7 @@ import com.submission.dicoding.dgitapp.ui.detail.follow.FollowViewModel
 import com.submission.dicoding.dgitapp.ui.detail.userrepo.UserRepositoryViewModel
 import com.submission.dicoding.dgitapp.ui.favorite.FavoriteUserViewModel
 import com.submission.dicoding.dgitapp.ui.home.MainViewModel
+import com.submission.dicoding.dgitapp.utils.Constant.CONNECTION_TIMEOUT
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -35,13 +37,13 @@ val networkModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .connectTimeout(120, TimeUnit.SECONDS)
-            .readTimeout(120, TimeUnit.SECONDS)
+            .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .build()
     }
     single {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://tourism-api.dicoding.dev/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()

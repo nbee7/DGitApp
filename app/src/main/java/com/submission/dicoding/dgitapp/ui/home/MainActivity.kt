@@ -8,12 +8,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.EditText
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.dicoding.dgitapp.R
+import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
 import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
@@ -21,17 +22,17 @@ import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
 import com.submission.dicoding.dgitapp.utils.gone
 import com.submission.dicoding.dgitapp.utils.visible
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback {
     private lateinit var binding: ActivityMainBinding
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setObserver()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,25 +61,30 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         return true
     }
 
-    private fun setObserver() {
-        mainViewModel.listUserSeach.observe(this) {
+    private fun searchResult(result: Resource<List<UserItems>>){
+        mainViewModel.getUser.observe(this) {
             if (it != null) {
-                val mainAdapter = MainAdapter(it, this, this)
-                binding.rvListUser.apply {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    setHasFixedSize(true)
-                    adapter = mainAdapter
+                when (result) {
+                    is Resource.Loading -> showLoading(true)
+                    is Resource.Error -> {
+                        showLoading(false)
+                        showError()
+                    }
+                    is Resource.Success -> {
+                        showLoading(false)
+                        val mainAdapter = it.data?.let { it1 -> MainAdapter(it1, this, this) }
+                        binding.rvListUser.apply {
+                            layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                            setHasFixedSize(true)
+                            adapter = mainAdapter
+                        }
+                    }
                 }
-            } else {
-                binding.rvListUser.gone()
-                binding.txtEmpty.visible()
             }
         }
-
-        mainViewModel.loading.observe(this){
-            showLoading(it)
-        }
     }
+
 
     private fun showLoading(state: Boolean) {
         if (state) {
@@ -88,6 +94,10 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
             binding.rvListUser.visible()
             binding.pbUser.gone()
         }
+    }
+
+    private fun showError() {
+        Toast.makeText(this@MainActivity, "An Error is Occurred", Toast.LENGTH_SHORT).show()
     }
 
     override fun onUserItemClicked(data: UserItems) {
