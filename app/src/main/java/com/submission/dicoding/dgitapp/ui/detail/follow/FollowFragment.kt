@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.FragmentFollowBinding
 import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
@@ -45,27 +47,43 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             setUpViewPager()
-
-            followViewModel.loading.observe(viewLifecycleOwner) {
-                showLoading(it)
-            }
         }
     }
 
     private fun setUpViewPager() {
         when (sectionIndex) {
-            1 -> followViewModel.followers.observe(viewLifecycleOwner) { data ->
-                if (data == null) {
+            1 -> followViewModel.getUserFollowers.observe(viewLifecycleOwner) { user ->
+                if (user == null) {
                     username?.let { followViewModel.userFollowers(it) }
                 } else {
-                    setRecycleview(data)
+                    when (user) {
+                        is Resource.Loading -> showLoading(true)
+                        is Resource.Error -> {
+                            showLoading(false)
+                            showError(user.message)
+                        }
+                        is Resource.Success -> {
+                            showLoading(false)
+                            user.data?.let { setRecycleview(it) }
+                        }
+                    }
                 }
             }
-            2 -> followViewModel.followings.observe(viewLifecycleOwner) { data ->
-                if (data == null) {
+            2 -> followViewModel.getUserFollowings.observe(viewLifecycleOwner) { user ->
+                if (user == null) {
                     username?.let { followViewModel.userFollowings(it) }
                 } else {
-                    setRecycleview(data)
+                    when (user) {
+                        is Resource.Loading -> showLoading(true)
+                        is Resource.Error -> {
+                            showLoading(false)
+                            showError(user.message)
+                        }
+                        is Resource.Success -> {
+                            showLoading(false)
+                            user.data?.let { setRecycleview(it) }
+                        }
+                    }
                 }
             }
         }
@@ -92,6 +110,10 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
             binding?.rvListUser?.visible()
             binding?.pbUser?.gone()
         }
+    }
+
+    private fun showError(message: String?) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
