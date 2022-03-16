@@ -4,9 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import com.submission.dicoding.dgitapp.databinding.ActivityDetailUserBinding
 import com.submission.dicoding.dgitapp.ui.detail.SectionPagerAdapter.Companion.TAB_TITLES
@@ -14,10 +15,11 @@ import com.submission.dicoding.dgitapp.utils.gone
 import com.submission.dicoding.dgitapp.utils.setImageUrl
 import com.submission.dicoding.dgitapp.utils.toShortNumberDisplay
 import com.submission.dicoding.dgitapp.utils.visible
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUserBinding
-    private val detailViewModel: DetailUserViewModel by viewModels()
+    private val detailViewModel: DetailUserViewModel by viewModel()
     private var username: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,21 +31,28 @@ class DetailUserActivity : AppCompatActivity() {
 
         initViewPager()
 
-        detailViewModel.detailUser.observe(this) { data ->
-            if (data == null) {
-                username?.let { detailViewModel.getDetailUser(it) }
-            } else {
-                setUserDetail(data)
-            }
-        }
-
-        detailViewModel.loading.observe(this) {
-            showLoading(it)
-        }
+        setObserver()
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = username
+        }
+    }
+
+    private fun setObserver() {
+        detailViewModel.getUserDetail.observe(this) { user ->
+            if (user == null) {
+                username?.let { detailViewModel.userDetail(it) }
+            } else {
+                when (user) {
+                    is Resource.Loading -> showLoading(true)
+                    is Resource.Error -> {
+                        showLoading(false)
+                        showError(user.message)
+                    }
+                    is Resource.Success -> user.data?.let { setUserDetail(it) }
+                }
+            }
         }
     }
 
@@ -81,6 +90,10 @@ class DetailUserActivity : AppCompatActivity() {
         } else {
             binding.pbDetailUser.gone()
         }
+    }
+
+    private fun showError(message: String?) {
+        Toast.makeText(this@DetailUserActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

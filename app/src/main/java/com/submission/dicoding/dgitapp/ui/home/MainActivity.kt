@@ -17,6 +17,7 @@ import com.submission.dicoding.dgitapp.R
 import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
+import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 //import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
                     is Resource.Loading -> showLoading(true)
                     is Resource.Error -> {
                         showLoading(false)
-                        showError()
+                        showError(result.message)
                     }
                     is Resource.Success -> {
                         showLoading(false)
@@ -96,12 +97,12 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         }
     }
 
-    private fun showError() {
-        Toast.makeText(this@MainActivity, "An Error is Occurred", Toast.LENGTH_SHORT).show()
+    private fun showError(message: String?) {
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onUserItemClicked(data: UserItems) {
-        //DetailUserActivity.start(this, data.login)
+        DetailUserActivity.start(this, data.login)
     }
 
     override fun onShareClick(data: UserItems) {
