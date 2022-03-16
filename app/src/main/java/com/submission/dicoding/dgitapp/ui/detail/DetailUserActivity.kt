@@ -50,7 +50,10 @@ class DetailUserActivity : AppCompatActivity() {
                         showLoading(false)
                         showError(user.message)
                     }
-                    is Resource.Success -> user.data?.let { setUserDetail(it) }
+                    is Resource.Success -> {
+                        showLoading(false)
+                        user.data?.let { setUserDetail(it) }
+                    }
                 }
             }
         }

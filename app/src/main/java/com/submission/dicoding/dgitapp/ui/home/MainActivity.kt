@@ -74,15 +74,23 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
                     }
                     is Resource.Success -> {
                         showLoading(false)
-                        val mainAdapter = result.data?.let { it -> MainAdapter(it, this, this) }
-                        binding.rvListUser.apply {
-                            layoutManager =
-                                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                            setHasFixedSize(true)
-                            adapter = mainAdapter
-                        }
+                        result.data?.let { setRecycleview(it) }
                     }
                 }
+            }
+        }
+    }
+
+    private fun setRecycleview(listUser: List<UserItems>) {
+        if (listUser.isNullOrEmpty()) {
+            binding.txtEmpty.visible()
+        } else {
+            val mainAdapter = MainAdapter(listUser, this, this)
+            binding.rvListUser.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                setHasFixedSize(true)
+                adapter = mainAdapter
             }
         }
     }

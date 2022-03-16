@@ -15,4 +15,5 @@
     <string name="followings">Followings</string>
     <string name="txt_fab_favorite">Floating Action Button Add Favorite User</string>
     <string name="menu_favorite">Menu Favorite</string>
+    <string name="txt_user_not_found">User Not Found</string>
 </resources>

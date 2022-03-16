@@ -54,7 +54,10 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
                             showLoading(false)
                             showError(user.message)
                         }
-                        is Resource.Success -> user.data?.let { setRecycleview(it) }
+                        is Resource.Success -> {
+                            showLoading(false)
+                            user.data?.let { setRecycleview(it) }
+                        }
                     }
                 }
             }
