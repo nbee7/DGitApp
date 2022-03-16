@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
@@ -18,11 +17,12 @@ import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
 import com.submission.dicoding.dgitapp.utils.gone
 import com.submission.dicoding.dgitapp.utils.visible
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
     private var _binding: FragmentFollowBinding? = null
     private val binding get() = _binding
-    private val followViewModel: FollowViewModel by viewModels()
+    private val followViewModel: FollowViewModel by viewModel()
     private var sectionIndex: Int? = 0
     private var username: String? = null
 

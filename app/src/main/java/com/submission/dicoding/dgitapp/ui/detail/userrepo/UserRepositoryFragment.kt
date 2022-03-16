@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserRepositoryResponse
@@ -17,12 +16,13 @@ import com.submission.dicoding.dgitapp.databinding.FragmentUserRepositoryBinding
 import com.submission.dicoding.dgitapp.utils.OnRepositoryitemClickcallback
 import com.submission.dicoding.dgitapp.utils.gone
 import com.submission.dicoding.dgitapp.utils.visible
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
     private var _binding: FragmentUserRepositoryBinding? = null
     private val binding get() = _binding
     private var username: String? = null
-    private val repoViewModel: UserRepositoryViewModel by viewModels()
+    private val repoViewModel: UserRepositoryViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
