@@ -1,18 +1,23 @@
 package com.submission.dicoding.dgitapp.ui.detail.userrepo
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.submission.dicoding.dgitapp.BuildConfig
+import androidx.lifecycle.viewModelScope
+import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.UserGithubRepository
-import com.submission.dicoding.dgitapp.data.remote.network.ApiConfig
 import com.submission.dicoding.dgitapp.data.remote.response.UserRepositoryResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 class UserRepositoryViewModel(private val repo: UserGithubRepository): ViewModel() {
+    private val _getUserRepository = MutableLiveData<Resource<List<UserRepositoryResponse>>>()
+    val getUserRepository: LiveData<Resource<List<UserRepositoryResponse>>> = _getUserRepository
 
+    fun userRepository(username: String) {
+        viewModelScope.launch {
+            repo.getUserRepository(username).collect {
+                _getUserRepository.value = it
+            }
+        }
+    }
 }

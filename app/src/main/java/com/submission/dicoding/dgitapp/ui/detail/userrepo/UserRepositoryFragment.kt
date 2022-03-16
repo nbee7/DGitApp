@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserRepositoryResponse
 import com.submission.dicoding.dgitapp.databinding.FragmentUserRepositoryBinding
 import com.submission.dicoding.dgitapp.utils.OnRepositoryitemClickcallback
@@ -41,17 +43,20 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (activity != null){
-            repoViewModel.repository.observe(viewLifecycleOwner) { data ->
-                if (data == null){
+        if (activity != null) {
+            repoViewModel.getUserRepository.observe(viewLifecycleOwner) { user ->
+                if (user == null) {
                     username?.let { repoViewModel.userRepository(it) }
                 } else {
-                    setRecycleview(data)
+                    when (user) {
+                        is Resource.Loading -> showLoading(true)
+                        is Resource.Error -> {
+                            showLoading(false)
+                            showError(user.message)
+                        }
+                        is Resource.Success -> user.data?.let { setRecycleview(it) }
+                    }
                 }
-            }
-
-            repoViewModel.loading.observe(viewLifecycleOwner) {
-                showLoading(it)
             }
         }
     }
@@ -77,6 +82,10 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
             binding?.rvListUser?.visible()
             binding?.pbUser?.gone()
         }
+    }
+
+    private fun showError(message: String?) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
