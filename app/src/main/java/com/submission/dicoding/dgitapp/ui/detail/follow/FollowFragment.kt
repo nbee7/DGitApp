@@ -91,8 +91,13 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
 
     private fun setRecycleview(listUser: List<UserItems>) {
         if (listUser.isNullOrEmpty()) {
+            showLoading(false)
+            binding?.rvListUser?.gone()
             binding?.txtEmpty?.visible()
         } else {
+            showLoading(false)
+            binding?.txtEmpty?.gone()
+            binding?.rvListUser?.visible()
             val mainAdapter = MainAdapter(listUser, this, this)
             binding?.rvListUser?.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -107,7 +112,6 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
             binding?.rvListUser?.gone()
             binding?.pbUser?.visible()
         } else {
-            binding?.rvListUser?.visible()
             binding?.pbUser?.gone()
         }
     }

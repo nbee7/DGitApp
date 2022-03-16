@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
                         showError(result.message)
                     }
                     is Resource.Success -> {
-                        showLoading(false)
                         result.data?.let { setRecycleview(it) }
                     }
                 }
@@ -83,8 +82,13 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
 
     private fun setRecycleview(listUser: List<UserItems>) {
         if (listUser.isNullOrEmpty()) {
+            showLoading(false)
+            binding.rvListUser.gone()
             binding.txtEmpty.visible()
         } else {
+            showLoading(false)
+            binding.txtEmpty.gone()
+            binding.rvListUser.visible()
             val mainAdapter = MainAdapter(listUser, this, this)
             binding.rvListUser.apply {
                 layoutManager =
@@ -100,7 +104,6 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
             binding.rvListUser.gone()
             binding.pbUser.visible()
         } else {
-            binding.rvListUser.visible()
             binding.pbUser.gone()
         }
     }
