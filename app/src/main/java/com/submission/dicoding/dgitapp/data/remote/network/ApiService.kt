@@ -4,7 +4,6 @@ import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.data.remote.response.UserRepositoryResponse
 import com.submission.dicoding.dgitapp.data.remote.response.UserResponse
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path

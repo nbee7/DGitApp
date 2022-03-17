@@ -10,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.lang.Exception
 
 class RemoteDataSource(private val apiService: ApiService) {
     private val token = "token " + BuildConfig.API_KEY
@@ -36,7 +35,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     suspend fun getUserDetail(username: String): Flow<ApiResponse<UserDetailResponse>> {
         return flow {
             try {
-                val response = apiService.getDetail(token, username)
+                val response = apiService.getDetail(username, token)
                 if (response.name.isNotEmpty()) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -52,7 +51,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     suspend fun getUserFollowers(username: String): Flow<ApiResponse<List<UserItems>>> {
         return flow {
             try {
-                val response = apiService.getFollowers(token, username)
+                val response = apiService.getFollowers(username, token)
                 if (response.isNotEmpty()) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -68,7 +67,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     suspend fun getUserFollowings(username: String): Flow<ApiResponse<List<UserItems>>> {
         return flow {
             try {
-                val response = apiService.getFollowers(token, username)
+                val response = apiService.getFollowings(username, token)
                 if (response.isNotEmpty()) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -84,7 +83,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     suspend fun getUserRepository(username: String): Flow<ApiResponse<List<UserRepositoryResponse>>> {
         return flow {
             try {
-                val response = apiService.getRepository(token, username)
+                val response = apiService.getRepository(username, token)
                 if (response.isNotEmpty()) {
                     emit(ApiResponse.Success(response))
                 } else {

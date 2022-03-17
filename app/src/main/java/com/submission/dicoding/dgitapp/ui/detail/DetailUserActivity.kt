@@ -3,6 +3,7 @@ package com.submission.dicoding.dgitapp.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +32,24 @@ class DetailUserActivity : AppCompatActivity() {
 
         initViewPager()
 
-        setObserver()
+        username?.let { name ->
+            detailViewModel.userDetail(name).observe(this) { user ->
+                if (user != null) {
+                    when (user) {
+                        is Resource.Loading -> showLoading(true)
+                        is Resource.Error -> {
+                            showLoading(false)
+                            showError(user.message)
+                        }
+                        is Resource.Success -> {
+                            showLoading(false)
+                            user.data?.let { setUserDetail(it) }
+                        }
+                    }
+                    Log.e("DetailUserActivity", "data tidak ada")
+                }
+            }
+        }
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -39,25 +57,6 @@ class DetailUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun setObserver() {
-        detailViewModel.getUserDetail.observe(this) { user ->
-            if (user == null) {
-                username?.let { detailViewModel.userDetail(it) }
-            } else {
-                when (user) {
-                    is Resource.Loading -> showLoading(true)
-                    is Resource.Error -> {
-                        showLoading(false)
-                        showError(user.message)
-                    }
-                    is Resource.Success -> {
-                        showLoading(false)
-                        user.data?.let { setUserDetail(it) }
-                    }
-                }
-            }
-        }
-    }
 
     private fun initViewPager() {
         val sectionPagerAdapter = SectionPagerAdapter(this, username)

@@ -52,10 +52,8 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
 
     private fun setUpViewPager() {
         when (sectionIndex) {
-            1 -> followViewModel.getUserFollowers.observe(viewLifecycleOwner) { user ->
-                if (user == null) {
-                    username?.let { followViewModel.userFollowers(it) }
-                } else {
+            1 -> username?.let { name ->
+                followViewModel.userFollowers(name).observe(viewLifecycleOwner) { user ->
                     when (user) {
                         is Resource.Loading -> showLoading(true)
                         is Resource.Error -> {
@@ -69,10 +67,8 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
                     }
                 }
             }
-            2 -> followViewModel.getUserFollowings.observe(viewLifecycleOwner) { user ->
-                if (user == null) {
-                    username?.let { followViewModel.userFollowings(it) }
-                } else {
+            2 -> username?.let { name ->
+                followViewModel.userFollowings(name).observe(viewLifecycleOwner) { user ->
                     when (user) {
                         is Resource.Loading -> showLoading(true)
                         is Resource.Error -> {
@@ -98,11 +94,11 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
             showLoading(false)
             binding?.txtEmpty?.gone()
             binding?.rvListUser?.visible()
-            val mainAdapter = MainAdapter(listUser, this, this)
+            val followAdapter = MainAdapter(listUser, this, this)
             binding?.rvListUser?.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 setHasFixedSize(true)
-                adapter = mainAdapter
+                adapter = followAdapter
             }
         }
     }

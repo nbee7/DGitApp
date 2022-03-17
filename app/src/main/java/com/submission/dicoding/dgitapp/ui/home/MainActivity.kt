@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         if (state) {
             binding.rvListUser.gone()
             binding.pbUser.visible()
+            binding.txtEmpty.gone()
         } else {
             binding.pbUser.gone()
         }

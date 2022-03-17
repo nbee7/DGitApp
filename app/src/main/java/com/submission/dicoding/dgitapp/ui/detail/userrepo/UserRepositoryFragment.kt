@@ -44,10 +44,8 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            repoViewModel.getUserRepository.observe(viewLifecycleOwner) { user ->
-                if (user == null) {
-                    username?.let { repoViewModel.userRepository(it) }
-                } else {
+            username?.let { name ->
+                repoViewModel.userRepository(name).observe(viewLifecycleOwner) { user ->
                     when (user) {
                         is Resource.Loading -> showLoading(true)
                         is Resource.Error -> {
@@ -73,11 +71,11 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
             showLoading(false)
             binding?.txtEmpty?.gone()
             binding?.rvListUser?.visible()
-            val mainAdapter = UserRepositoryAdapter(listRepos, this)
+            val userRepositoryAdapter = UserRepositoryAdapter(listRepos, this)
             binding?.rvListUser?.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 setHasFixedSize(true)
-                adapter = mainAdapter
+                adapter = userRepositoryAdapter
             }
         }
     }
