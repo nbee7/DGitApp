@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -18,6 +19,7 @@ import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
 import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
+import com.submission.dicoding.dgitapp.ui.favorite.FavoriteUserActivity
 //import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
@@ -111,6 +113,14 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
 
     private fun showError(message: String?) {
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.favorite) {
+            val mIntent = Intent(this@MainActivity, FavoriteUserActivity::class.java)
+            startActivity(mIntent)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onUserItemClicked(data: UserItems) {

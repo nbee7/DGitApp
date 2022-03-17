@@ -7,8 +7,11 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayoutMediator
+import com.submission.dicoding.dgitapp.R
 import com.submission.dicoding.dgitapp.data.Resource
+import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
 import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import com.submission.dicoding.dgitapp.databinding.ActivityDetailUserBinding
 import com.submission.dicoding.dgitapp.ui.detail.SectionPagerAdapter.Companion.TAB_TITLES
@@ -22,6 +25,7 @@ class DetailUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUserBinding
     private val detailViewModel: DetailUserViewModel by viewModel()
     private var username: String? = null
+    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +61,6 @@ class DetailUserActivity : AppCompatActivity() {
         }
     }
 
-
     private fun initViewPager() {
         val sectionPagerAdapter = SectionPagerAdapter(this, username)
         binding.vpFollowRepo.apply {
@@ -83,6 +86,42 @@ class DetailUserActivity : AppCompatActivity() {
             tvFollowers.text = data.followers.toShortNumberDisplay()
             tvFollowings.text = data.following.toShortNumberDisplay()
             tvRepository.text = data.publicRepos.toShortNumberDisplay()
+        }
+        checkFavoriteUser(data.id.toString())
+        val favoriteUser =
+            FavoriteUserEntity(data.id.toString(), data.login, data.avatarUrl, data.html_url)
+        binding.fabFavorite.setOnClickListener {
+            if (isFavorite) {
+                detailViewModel.deleteFavoriteUser(favoriteUser)
+                Toast.makeText(
+                    this,
+                    getString(R.string.message_remove_favorite),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                detailViewModel.saveToFavorite(favoriteUser)
+                Toast.makeText(this, getString(R.string.message_add_favorite), Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+
+    private fun checkFavoriteUser(id: String) {
+        detailViewModel.isFavoriteUser(id).observe(this) { user ->
+            if (user) {
+                isFavorite = true
+                binding.fabFavorite.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this, R.drawable.ic_baseline_favorited_24
+                    )
+                )
+            } else {
+                binding.fabFavorite.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this, R.drawable.ic_baseline_favorite_24
+                    )
+                )
+            }
         }
     }
 

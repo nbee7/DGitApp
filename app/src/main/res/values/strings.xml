@@ -16,4 +16,6 @@
     <string name="txt_fab_favorite">Floating Action Button Add Favorite User</string>
     <string name="menu_favorite">Menu Favorite</string>
     <string name="txt_user_not_found">User Not Found</string>
+    <string name="message_remove_favorite">successfully remove favorite</string>
+    <string name="message_add_favorite">Success add to favorite</string>
 </resources>

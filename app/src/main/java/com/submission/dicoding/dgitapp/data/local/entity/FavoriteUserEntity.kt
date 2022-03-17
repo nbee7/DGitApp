@@ -16,5 +16,8 @@ class FavoriteUserEntity(
     var username: String? = null,
 
     @ColumnInfo(name = "avatar")
-    var avatar: String? = null
+    var avatar: String? = null,
+
+    @ColumnInfo(name = "url")
+    var url: String? = null
 )

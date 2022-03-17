@@ -25,6 +25,12 @@ data class UserDetailResponse(
     @field:SerializedName("location")
     val location: String,
 
-    @field:SerializedName("node_id")
-    val nodeId: String
+    @field:SerializedName("id")
+    val id: Int,
+
+    @field:SerializedName("login")
+    val login: String,
+
+    @field:SerializedName("html_url")
+    val html_url: String
 )
