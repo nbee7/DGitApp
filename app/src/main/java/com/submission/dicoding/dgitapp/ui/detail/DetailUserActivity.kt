@@ -3,7 +3,6 @@ package com.submission.dicoding.dgitapp.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,26 +33,27 @@ class DetailUserActivity : AppCompatActivity() {
 
         username = intent?.getStringExtra(GITHUB_USER)
 
-        initViewPager()
+        if (savedInstanceState == null) {
+            username?.let { detailViewModel.userDetail(it) }
+        }
 
-        username?.let { name ->
-            detailViewModel.userDetail(name).observe(this) { user ->
-                if (user != null) {
-                    when (user) {
-                        is Resource.Loading -> showLoading(true)
-                        is Resource.Error -> {
-                            showLoading(false)
-                            showError(user.message)
-                        }
-                        is Resource.Success -> {
-                            showLoading(false)
-                            user.data?.let { setUserDetail(it) }
-                        }
+        detailViewModel.getUserdetail.observe(this) { user ->
+            if (user != null) {
+                when (user) {
+                    is Resource.Loading -> showLoading(true)
+                    is Resource.Error -> {
+                        showLoading(false)
+                        showError(user.message)
                     }
-                    Log.e("DetailUserActivity", "data tidak ada")
+                    is Resource.Success -> {
+                        showLoading(false)
+                        user.data?.let { setUserDetail(it) }
+                    }
                 }
             }
         }
+
+        initViewPager()
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -87,6 +87,7 @@ class DetailUserActivity : AppCompatActivity() {
             tvFollowings.text = data.following.toShortNumberDisplay()
             tvRepository.text = data.publicRepos.toShortNumberDisplay()
         }
+
         checkFavoriteUser(data.id.toString())
         val favoriteUser =
             FavoriteUserEntity(data.id.toString(), data.login, data.avatarUrl, data.html_url)

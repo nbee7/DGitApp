@@ -1,9 +1,6 @@
 package com.submission.dicoding.dgitapp.ui.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.submission.dicoding.dgitapp.data.Resource
 import com.submission.dicoding.dgitapp.data.UserGithubRepository
 import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
@@ -11,8 +8,16 @@ import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import kotlinx.coroutines.launch
 
 class DetailUserViewModel(private val repo: UserGithubRepository): ViewModel() {
-    fun userDetail(username: String): LiveData<Resource<UserDetailResponse>> =
-        repo.getUserDetail(username).asLiveData()
+    private var _getUserDetail = MutableLiveData<Resource<UserDetailResponse>>()
+    val getUserdetail: LiveData<Resource<UserDetailResponse>> = _getUserDetail
+
+    fun userDetail(username: String) {
+        viewModelScope.launch {
+            repo.getUserDetail(username).collect {
+                _getUserDetail.value = it
+            }
+        }
+    }
 
     fun saveToFavorite(user: FavoriteUserEntity) {
         viewModelScope.launch {

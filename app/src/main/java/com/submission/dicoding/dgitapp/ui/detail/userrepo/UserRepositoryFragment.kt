@@ -44,8 +44,9 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            username?.let { name ->
-                repoViewModel.userRepository(name).observe(viewLifecycleOwner) { user ->
+            if (savedInstanceState == null) username?.let { repoViewModel.userRepository(it) }
+            repoViewModel.getUserRepository.observe(viewLifecycleOwner) { user ->
+                if (user != null) {
                     when (user) {
                         is Resource.Loading -> showLoading(true)
                         is Resource.Error -> {

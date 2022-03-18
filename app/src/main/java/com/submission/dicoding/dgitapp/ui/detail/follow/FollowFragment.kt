@@ -46,39 +46,50 @@ class FollowFragment : Fragment(), OnUserItemClickCallback, ShareCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            setUpViewPager()
+            when (sectionIndex) {
+                1 -> {
+                    if (savedInstanceState == null) username?.let { followViewModel.userFollowers(it) }
+                    setObserverFollowers()
+                }
+
+                2 -> {
+                    if (savedInstanceState == null) username?.let { followViewModel.userFollowing(it) }
+                    setObserverFollowings()
+                }
+            }
         }
     }
 
-    private fun setUpViewPager() {
-        when (sectionIndex) {
-            1 -> username?.let { name ->
-                followViewModel.userFollowers(name).observe(viewLifecycleOwner) { user ->
-                    when (user) {
-                        is Resource.Loading -> showLoading(true)
-                        is Resource.Error -> {
-                            showLoading(false)
-                            showError(user.message)
-                        }
-                        is Resource.Success -> {
-                            showLoading(false)
-                            user.data?.let { setRecycleview(it) }
-                        }
+    private fun setObserverFollowers() {
+        followViewModel.getUserFollower.observe(viewLifecycleOwner) { user ->
+            if (user != null) {
+                when (user) {
+                    is Resource.Loading -> showLoading(true)
+                    is Resource.Error -> {
+                        showLoading(false)
+                        showError(user.message)
+                    }
+                    is Resource.Success -> {
+                        showLoading(false)
+                        user.data?.let { setRecycleview(it) }
                     }
                 }
             }
-            2 -> username?.let { name ->
-                followViewModel.userFollowings(name).observe(viewLifecycleOwner) { user ->
-                    when (user) {
-                        is Resource.Loading -> showLoading(true)
-                        is Resource.Error -> {
-                            showLoading(false)
-                            showError(user.message)
-                        }
-                        is Resource.Success -> {
-                            showLoading(false)
-                            user.data?.let { setRecycleview(it) }
-                        }
+        }
+    }
+
+    private fun setObserverFollowings() {
+        followViewModel.getUserFollowing.observe(viewLifecycleOwner) { user ->
+            if (user != null) {
+                when (user) {
+                    is Resource.Loading -> showLoading(true)
+                    is Resource.Error -> {
+                        showLoading(false)
+                        showError(user.message)
+                    }
+                    is Resource.Success -> {
+                        showLoading(false)
+                        user.data?.let { setRecycleview(it) }
                     }
                 }
             }
