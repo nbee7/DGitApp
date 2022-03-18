@@ -38,6 +38,14 @@ class FavoriteUserActivity : AppCompatActivity(), OnFavoriteUserItemClickCallbac
 
         itemTouchHelper.attachToRecyclerView(binding.rvListUser)
 
+        favoriteUserAdapter = FavoriteUserAdapter(this, this)
+        binding.rvListUser.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = favoriteUserAdapter
+        }
+
         favoriteViewModel.getAllFavoriteUser().observe(this) { user ->
             if (user.isNullOrEmpty()) {
                 binding.rvListUser.gone()
@@ -45,13 +53,6 @@ class FavoriteUserActivity : AppCompatActivity(), OnFavoriteUserItemClickCallbac
             } else {
                 binding.txtEmpty.gone()
                 binding.rvListUser.visible()
-                favoriteUserAdapter = FavoriteUserAdapter(this, this)
-                binding.rvListUser.apply {
-                    layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    setHasFixedSize(true)
-                    adapter = favoriteUserAdapter
-                }
                 favoriteUserAdapter.submitList(user)
             }
         }
