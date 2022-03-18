@@ -4,7 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.submission.dicoding.dgitapp.R
 import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
 import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
 import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
@@ -18,6 +22,7 @@ class FavoriteUserActivity : AppCompatActivity(), OnFavoriteUserItemClickCallbac
     FavoriteUserShareCallback {
     private lateinit var binding: ActivityMainBinding
     private val favoriteViewModel: FavoriteUserViewModel by viewModel()
+    private lateinit var favoriteUserAdapter: FavoriteUserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +36,8 @@ class FavoriteUserActivity : AppCompatActivity(), OnFavoriteUserItemClickCallbac
             title = pageTittle
         }
 
+        itemTouchHelper.attachToRecyclerView(binding.rvListUser)
+
         favoriteViewModel.getAllFavoriteUser().observe(this) { user ->
             if (user.isNullOrEmpty()) {
                 binding.rvListUser.gone()
@@ -38,16 +45,47 @@ class FavoriteUserActivity : AppCompatActivity(), OnFavoriteUserItemClickCallbac
             } else {
                 binding.txtEmpty.gone()
                 binding.rvListUser.visible()
-                val favoriteUserAdapter = FavoriteUserAdapter(user, this, this)
+                favoriteUserAdapter = FavoriteUserAdapter(this, this)
                 binding.rvListUser.apply {
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                     setHasFixedSize(true)
                     adapter = favoriteUserAdapter
                 }
+                favoriteUserAdapter.submitList(user)
             }
         }
     }
+
+    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int = makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean = true
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val swipePosition = viewHolder.absoluteAdapterPosition
+            val favoritUser = favoriteUserAdapter.getSwipedData(swipePosition)
+            favoritUser?.let { favoriteViewModel.deleteFavoriteUser(it) }
+
+            val snackbar = Snackbar.make(
+                binding.root.rootView,
+                R.string.message_undo_delete,
+                Snackbar.LENGTH_SHORT
+            )
+            snackbar.setAction("YES") { _ ->
+                favoritUser?.let { favoriteViewModel.saveToFavorite(it) }
+            }
+            snackbar.show()
+        }
+    })
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
