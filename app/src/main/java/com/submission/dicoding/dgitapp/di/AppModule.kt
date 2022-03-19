@@ -2,6 +2,7 @@ package com.submission.dicoding.dgitapp.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.submission.dicoding.dgitapp.BuildConfig
@@ -61,7 +62,7 @@ val networkModule = module {
     }
 }
 
-private val Context.dataStore: DataStore<androidx.datastore.preferences.core.Preferences> by preferencesDataStore(
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = "settings"
 )
 
