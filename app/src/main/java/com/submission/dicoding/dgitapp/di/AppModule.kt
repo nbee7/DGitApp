@@ -1,9 +1,13 @@
 package com.submission.dicoding.dgitapp.di
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.submission.dicoding.dgitapp.BuildConfig
 import com.submission.dicoding.dgitapp.data.UserGithubRepository
 import com.submission.dicoding.dgitapp.data.local.LocalDataSource
+import com.submission.dicoding.dgitapp.data.local.datastore.AppTheme
 import com.submission.dicoding.dgitapp.data.local.room.UserDatabase
 import com.submission.dicoding.dgitapp.data.remote.RemoteDataSource
 import com.submission.dicoding.dgitapp.data.remote.network.ApiService
@@ -12,6 +16,7 @@ import com.submission.dicoding.dgitapp.ui.detail.follow.FollowViewModel
 import com.submission.dicoding.dgitapp.ui.detail.userrepo.UserRepositoryViewModel
 import com.submission.dicoding.dgitapp.ui.favorite.FavoriteUserViewModel
 import com.submission.dicoding.dgitapp.ui.home.MainViewModel
+import com.submission.dicoding.dgitapp.ui.setting.SettingViewModel
 import com.submission.dicoding.dgitapp.utils.Constant.CONNECTION_TIMEOUT
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -56,10 +61,19 @@ val networkModule = module {
     }
 }
 
+private val Context.dataStore: DataStore<androidx.datastore.preferences.core.Preferences> by preferencesDataStore(
+    name = "settings"
+)
+
+val dataStoreModule = module {
+    factory { androidContext().dataStore }
+    single { AppTheme(get()) }
+}
+
 val repositoryModule = module {
     single { LocalDataSource(get()) }
     single { RemoteDataSource(get()) }
-    single { UserGithubRepository(get(), get()) }
+    single { UserGithubRepository(get(), get(), get()) }
 }
 
 val viewModelModule = module {
@@ -68,4 +82,5 @@ val viewModelModule = module {
     viewModel { DetailUserViewModel(get()) }
     viewModel { FollowViewModel(get()) }
     viewModel { UserRepositoryViewModel(get()) }
+    viewModel { SettingViewModel(get()) }
 }

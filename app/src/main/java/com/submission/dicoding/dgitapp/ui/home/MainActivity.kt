@@ -1,6 +1,5 @@
 package com.submission.dicoding.dgitapp.ui.home
 
-//import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -20,6 +19,7 @@ import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
 import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.ui.favorite.FavoriteUserActivity
+import com.submission.dicoding.dgitapp.ui.setting.SettingActivity
 import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
 import com.submission.dicoding.dgitapp.utils.gone
@@ -114,9 +114,15 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.favorite) {
-            val mIntent = Intent(this@MainActivity, FavoriteUserActivity::class.java)
-            startActivity(mIntent)
+        when (item.itemId) {
+            R.id.favorite -> {
+                val mIntent = Intent(this@MainActivity, FavoriteUserActivity::class.java)
+                startActivity(mIntent)
+            }
+            R.id.setting -> {
+                val mIntent = Intent(this@MainActivity, SettingActivity::class.java)
+                startActivity(mIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

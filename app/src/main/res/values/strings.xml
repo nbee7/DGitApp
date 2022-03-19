@@ -19,4 +19,6 @@
     <string name="message_remove_favorite">successfully remove favorite</string>
     <string name="message_add_favorite">Success add to favorite</string>
     <string name="message_undo_delete">Unde Delete from User Favorite ?</string>
+    <string name="menu_setting">Menu Setting</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

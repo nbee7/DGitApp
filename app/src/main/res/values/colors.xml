@@ -8,4 +8,5 @@
     <color name="colorSecondaryDark">#00b2cc</color>
     <color name="colorShade">#DDDDDD</color>
     <color name="colorComplement">#a1660d</color>
+    <color name="transparent">#00000000</color>
 </resources>

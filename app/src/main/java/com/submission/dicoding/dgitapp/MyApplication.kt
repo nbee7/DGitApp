@@ -1,10 +1,7 @@
 package com.submission.dicoding.dgitapp
 
 import android.app.Application
-import com.submission.dicoding.dgitapp.di.databaseModule
-import com.submission.dicoding.dgitapp.di.networkModule
-import com.submission.dicoding.dgitapp.di.repositoryModule
-import com.submission.dicoding.dgitapp.di.viewModelModule
+import com.submission.dicoding.dgitapp.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -20,6 +17,7 @@ class MyApplication: Application() {
                 listOf(
                     databaseModule,
                     networkModule,
+                    dataStoreModule,
                     repositoryModule,
                     viewModelModule
                 )

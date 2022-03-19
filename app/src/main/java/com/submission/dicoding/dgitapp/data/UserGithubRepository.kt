@@ -1,17 +1,21 @@
 package com.submission.dicoding.dgitapp.data
 
 import com.submission.dicoding.dgitapp.data.local.LocalDataSource
+import com.submission.dicoding.dgitapp.data.local.datastore.AppTheme
 import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
 import com.submission.dicoding.dgitapp.data.remote.ApiResponse
 import com.submission.dicoding.dgitapp.data.remote.RemoteDataSource
 import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.data.remote.response.UserRepositoryResponse
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 
 class UserGithubRepository(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val appTheme: AppTheme
 ): DataSource{
 
     override fun getSearchUser(username: String): Flow<Resource<List<UserItems>>> {
@@ -122,5 +126,11 @@ class UserGithubRepository(
 
     override fun isFavoriteUser(id: String): Flow<Boolean> {
         return localDataSource.isFavoriteUser(id)
+    }
+
+    override fun getThemeSetting(): Flow<Boolean> = appTheme.getThemeSetting()
+
+    override suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
+        appTheme.saveThemeSetting(isDarkModeActive)
     }
 }

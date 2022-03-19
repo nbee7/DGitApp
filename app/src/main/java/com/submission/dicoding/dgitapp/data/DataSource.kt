@@ -25,4 +25,8 @@ interface DataSource {
     fun getUserFavorite(): Flow<List<FavoriteUserEntity>>
 
     fun isFavoriteUser(id: String): Flow<Boolean>
+
+    fun getThemeSetting(): Flow<Boolean>
+
+    suspend fun saveThemeSetting(isDarkModeActive: Boolean)
 }

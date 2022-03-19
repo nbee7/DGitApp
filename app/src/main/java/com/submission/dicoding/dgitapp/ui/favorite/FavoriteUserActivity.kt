@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.submission.dicoding.dgitapp.R
 import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
-import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
+import com.submission.dicoding.dgitapp.databinding.ActivityFavoriteUserBinding
 import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.utils.FavoriteUserShareCallback
 import com.submission.dicoding.dgitapp.utils.OnFavoriteUserItemClickCallback
@@ -20,13 +20,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoriteUserActivity : AppCompatActivity(), OnFavoriteUserItemClickCallback,
     FavoriteUserShareCallback {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityFavoriteUserBinding
     private val favoriteViewModel: FavoriteUserViewModel by viewModel()
     private lateinit var favoriteUserAdapter: FavoriteUserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityFavoriteUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val pageTittle = "Favorite User"
