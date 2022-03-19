@@ -1,9 +1,9 @@
 package com.submission.dicoding.dgitapp.ui.home
 
+//import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -20,7 +20,6 @@ import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import com.submission.dicoding.dgitapp.databinding.ActivityMainBinding
 import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.ui.favorite.FavoriteUserActivity
-//import com.submission.dicoding.dgitapp.ui.detail.DetailUserActivity
 import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
 import com.submission.dicoding.dgitapp.utils.gone
@@ -44,7 +43,6 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         inflater.inflate(R.menu.option_menu, menu)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = (menu.findItem(R.id.search)?.actionView as SearchView).apply {
-            this.setBackgroundColor(Color.WHITE)
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             queryHint = resources.getString(R.string.search_hint)
         }
@@ -55,7 +53,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let { mainViewModel.searchUser(it) }
                 searchView.clearFocus()
-                return false
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
