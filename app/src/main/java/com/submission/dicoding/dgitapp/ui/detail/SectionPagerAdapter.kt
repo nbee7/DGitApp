@@ -8,7 +8,8 @@ import com.submission.dicoding.dgitapp.R
 import com.submission.dicoding.dgitapp.ui.detail.follow.FollowFragment
 import com.submission.dicoding.dgitapp.ui.detail.userrepo.UserRepositoryFragment
 
-class SectionPagerAdapter(activity: AppCompatActivity, private val username: String?): FragmentStateAdapter(activity) {
+class SectionPagerAdapter(activity: AppCompatActivity, private val username: String?) :
+    FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int = TAB_TITLES.size
 

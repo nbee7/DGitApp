@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
             queryHint = resources.getString(R.string.search_hint)
         }
 
-        val searchEditText = searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText
+        val searchEditText =
+            searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText
         TextViewCompat.setTextAppearance(searchEditText, R.style.searchText)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -63,7 +64,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         return true
     }
 
-    private fun setObserver(){
+    private fun setObserver() {
         mainViewModel.getUser.observe(this) { result ->
             if (result != null) {
                 when (result) {
@@ -140,7 +141,7 @@ class MainActivity : AppCompatActivity(), OnUserItemClickCallback, ShareCallback
         val intent = Intent(Intent.ACTION_SEND)
         intent.apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT,dataShare)
+            putExtra(Intent.EXTRA_TEXT, dataShare)
         }
         startActivity(Intent.createChooser(intent, "Share to Your Friends"))
     }

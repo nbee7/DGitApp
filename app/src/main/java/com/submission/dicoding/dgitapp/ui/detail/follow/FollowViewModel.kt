@@ -9,7 +9,7 @@ import com.submission.dicoding.dgitapp.data.UserGithubRepository
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import kotlinx.coroutines.launch
 
-class FollowViewModel(private val repo: UserGithubRepository): ViewModel() {
+class FollowViewModel(private val repo: UserGithubRepository) : ViewModel() {
 
     private var _getUserFollowers = MutableLiveData<Resource<List<UserItems>>>()
     val getUserFollower: LiveData<Resource<List<UserItems>>> = _getUserFollowers

@@ -9,13 +9,18 @@ import com.submission.dicoding.dgitapp.utils.OnUserItemClickCallback
 import com.submission.dicoding.dgitapp.utils.ShareCallback
 import com.submission.dicoding.dgitapp.utils.setImageUrl
 
-class MainAdapter(private val data: List<UserItems>, val callback: OnUserItemClickCallback? = null, val listener: ShareCallback? = null): RecyclerView.Adapter<MainAdapter.UseHorizontalViewHolder>() {
-    inner class UseHorizontalViewHolder(private val view: ItemUserBinding) : RecyclerView.ViewHolder(view.root) {
+class MainAdapter(
+    private val data: List<UserItems>,
+    val callback: OnUserItemClickCallback? = null,
+    val listener: ShareCallback? = null
+) : RecyclerView.Adapter<MainAdapter.UseHorizontalViewHolder>() {
+    inner class UseHorizontalViewHolder(private val view: ItemUserBinding) :
+        RecyclerView.ViewHolder(view.root) {
         fun bind(data: UserItems) {
             view.apply {
                 imgUser.setImageUrl(itemView.context, data.avatarUrl, pbUser)
                 tvUsername.text = data.login
-                btnShare.setOnClickListener{
+                btnShare.setOnClickListener {
                     listener?.onShareClick(data)
                 }
             }

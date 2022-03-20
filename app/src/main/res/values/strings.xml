@@ -7,7 +7,7 @@
     <string name="txt_company">Google</string>
     <string name="txt_location">Indonesia</string>
     <string name="search">Search User</string>
-    <string name="search_hint">Enter Username</string>
+    <string name="search_hint">Username</string>
     <string name="txt_data_empty">Data Not Found</string>
     <string name="language">Language</string>
     <string name="repository">Repository</string>

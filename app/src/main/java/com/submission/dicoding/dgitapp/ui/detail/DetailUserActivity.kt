@@ -148,7 +148,7 @@ class DetailUserActivity : AppCompatActivity() {
 
     companion object {
         private const val GITHUB_USER = "github_user"
-        fun start(context: Context, user: String ) {
+        fun start(context: Context, user: String) {
             Intent(context, DetailUserActivity::class.java).apply {
                 this.putExtra(GITHUB_USER, user)
                 context.startActivity(this)

@@ -35,10 +35,10 @@ class SplashScreenActivity : AppCompatActivity() {
         val alpha = 1f
         binding.icGithub.animate().setDuration(durationSplash.toLong(DurationUnit.MILLISECONDS))
             .alpha(alpha).withEndAction {
-            toMainActivity()
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            finish()
-        }
+                toMainActivity()
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                finish()
+            }
     }
 
     private fun toMainActivity() {

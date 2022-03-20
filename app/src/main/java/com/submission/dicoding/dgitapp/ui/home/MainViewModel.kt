@@ -9,7 +9,7 @@ import com.submission.dicoding.dgitapp.data.UserGithubRepository
 import com.submission.dicoding.dgitapp.data.remote.response.UserItems
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repo: UserGithubRepository): ViewModel() {
+class MainViewModel(private val repo: UserGithubRepository) : ViewModel() {
     private val _getUser = MutableLiveData<Resource<List<UserItems>>>()
     val getUser: LiveData<Resource<List<UserItems>>> = _getUser
     private val dummySearch = "brian"

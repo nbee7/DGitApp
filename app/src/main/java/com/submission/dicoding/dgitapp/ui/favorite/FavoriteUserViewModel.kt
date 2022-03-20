@@ -7,7 +7,7 @@ import com.submission.dicoding.dgitapp.data.UserGithubRepository
 import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
 import kotlinx.coroutines.launch
 
-class FavoriteUserViewModel(private val repo: UserGithubRepository): ViewModel() {
+class FavoriteUserViewModel(private val repo: UserGithubRepository) : ViewModel() {
     fun getAllFavoriteUser() = repo.getUserFavorite().asLiveData()
 
     fun saveToFavorite(user: FavoriteUserEntity) {

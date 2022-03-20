@@ -7,7 +7,7 @@ import com.submission.dicoding.dgitapp.data.local.entity.FavoriteUserEntity
 import com.submission.dicoding.dgitapp.data.remote.response.UserDetailResponse
 import kotlinx.coroutines.launch
 
-class DetailUserViewModel(private val repo: UserGithubRepository): ViewModel() {
+class DetailUserViewModel(private val repo: UserGithubRepository) : ViewModel() {
     private var _getUserDetail = MutableLiveData<Resource<UserDetailResponse>>()
     val getUserdetail: LiveData<Resource<UserDetailResponse>> = _getUserDetail
 
