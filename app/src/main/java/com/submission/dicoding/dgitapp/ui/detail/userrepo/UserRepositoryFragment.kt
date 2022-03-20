@@ -67,10 +67,10 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
         if (listRepos.isNullOrEmpty()) {
             showLoading(false)
             binding?.rvListUser?.gone()
-            binding?.txtEmpty?.visible()
+            binding?.lottieEmpty?.visible()
         } else {
             showLoading(false)
-            binding?.txtEmpty?.gone()
+            binding?.lottieEmpty?.gone()
             binding?.rvListUser?.visible()
             val userRepositoryAdapter = UserRepositoryAdapter(listRepos, this)
             binding?.rvListUser?.apply {
@@ -85,6 +85,7 @@ class UserRepositoryFragment : Fragment(), OnRepositoryitemClickcallback {
         if (state) {
             binding?.rvListUser?.gone()
             binding?.pbUser?.visible()
+            binding?.lottieEmpty?.gone()
         } else {
             binding?.pbUser?.gone()
         }

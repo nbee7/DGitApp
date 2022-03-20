@@ -49,9 +49,9 @@ class FavoriteUserActivity : AppCompatActivity(), OnFavoriteUserItemClickCallbac
         favoriteViewModel.getAllFavoriteUser().observe(this) { user ->
             if (user.isNullOrEmpty()) {
                 binding.rvListUser.gone()
-                binding.txtEmpty.visible()
+                binding.lottieEmpty.visible()
             } else {
-                binding.txtEmpty.gone()
+                binding.lottieEmpty.gone()
                 binding.rvListUser.visible()
                 favoriteUserAdapter.submitList(user)
             }

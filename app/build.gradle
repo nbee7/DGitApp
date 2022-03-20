@@ -67,4 +67,5 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.4.2'
     implementation "io.insert-koin:koin-core:3.1.5"
     implementation "io.insert-koin:koin-android:3.1.5"
+    implementation "com.airbnb.android:lottie:5.0.3"
 }
