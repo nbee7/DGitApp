@@ -6,6 +6,7 @@
 
 <img src="https://github.com/nbee7/nbee7/blob/main/assets/dgitapp-ss/dgitapp-1.png"/>
 <img src="https://github.com/nbee7/nbee7/blob/main/assets/dgitapp-ss/dgitapp-2.png"/>
+<img src="https://github.com/nbee7/nbee7/blob/main/assets/dgitapp-ss/dgitapp-3.png"/>
 
 ## Submission 1: DGitApp
 
